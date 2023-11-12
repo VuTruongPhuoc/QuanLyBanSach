@@ -1615,13 +1615,20 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 
-
+//add subtotal
 alter table table_orders
 add subtotal DECIMAL(20, 2);
-create proc Update_Subtotal
-UPDATE table_orders
-SET subtotal = (
-    SELECT SUM(price * quality)
-    FROM order_details AS detail
-    WHERE detail.order_id = table_orders.id
+
+//procedure update_subtotal
+create proc Update_Subtotal()
+as
+BEGIN
+    UPDATE table_orders o
+    SET o.subtotal = (
+        SELECT SUM(d.price * d.quantity)
+        FROM order_details d
+        WHERE d.order_id = o.id
+    )
+    where order_status = 3;
+END
 );
