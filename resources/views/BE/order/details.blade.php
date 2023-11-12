@@ -54,8 +54,6 @@
                                             <h4>Thời gian tạo: {{ $orders->created_at }}</h4>
                                         </div>
 
-
-
                                     </div>
                                     <div class="panel panel-default">
                                         <table class="table" ui-jq="footable"
