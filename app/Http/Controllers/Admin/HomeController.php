@@ -15,6 +15,9 @@ use App\Charts\CategoryChart;
 use App\Charts\OrderChart;
 use App\Charts\OrderStatusChart;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
+
 class HomeController extends Controller
 {
     public function __construct()
@@ -65,18 +68,11 @@ class HomeController extends Controller
             OrdersModel::where('order_status', 4)->count(),
         ]));
 
-
-
-
-    
-
         return view('BE.dash_board', compact('count_user', 'count_product', 'count_order', 'list_product_view', 'list_product_buy', 'list_product_rate', 'cateChart', 'orderSttChart'));
     }
 
     public function check()
-    {
-
-    
+    {  
         $prices = ProductModel::orderBy('price', 'DESC')->limit(5)->get();
         $currentYear = Carbon::now()->year;
         $mot = OrdersModel::whereBetween('created_at', [$currentYear.'-1-1 00:00:00', $currentYear.'-1-31 23:59:59'])->sum('subtotal');
@@ -155,6 +151,14 @@ class HomeController extends Controller
             return view('BE.doanhthu', compact('cateChart', 'bday', 'kday'));
         }
        
+    }
+    public function update_subtotal() {
+        // Thực hiện logic cập nhật subtotal
+        $queryResult = DB::select('call update_subtotal()');
+    
+        $result = collect($queryResult);
+    
+        return redirect()->back();
     }
     
 }

@@ -120,7 +120,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
   
     Route::post('/search-doanhthu',  [App\Http\Controllers\Admin\HomeController::class, 'search'])->name('searchDoanhThu');
   
-
+    Route::post('/update_subtotal', [App\Http\Controllers\Admin\HomeController::class, 'update_subtotal'])->name('update_subtotal');
     // category 
     Route::name('category.')->prefix('category')->group(function () {
 
@@ -237,7 +237,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::get('/delete/{id}', [ProductController::class, 'delete'])->name('delete');
 
     });
-
+    //shipping
     Route::name('shipping.')->prefix('shipping-fee')->group(function () {
         Route::get('/list', [ShippingFeeController::class, 'index'])->name('list');
         // Route::get('/disable_status/{id}', [ShippingFeeController::class, 'disable_status']);
@@ -254,7 +254,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::get('/delete/{id}', [ShippingFeeController::class, 'delete']);
 
     });
-
+    //banner
     Route::name('banner.')->prefix('banner')->group(function () {
         Route::get('/list', [BannerController::class, 'index'])->name('list');
         Route::get('/disable_status/{id}', [BannerController::class, 'disable_status']);
@@ -272,7 +272,10 @@ Route::name('admin.')->prefix('admin')->group(function () {
 
     });
 });
+    //route update subtotal
+    
 
+    
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();

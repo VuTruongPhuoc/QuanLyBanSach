@@ -39,10 +39,15 @@
                                     <div class="cart-qty">
                                         <form action="{{ route('updateCart', $item->rowId) }}" method="post">
                                             @csrf
+                                            <input type ="hidden" name="id" value="{{ $item->id }}">
+                                            <input type ="hidden" name="name_product" value="{{ $item->name }}">
                                             <input style="width: 50%;" name="update_qty" type="number" class="qty-input"
                                                 value="{{ $item->qty }}" min="1">
+                                            
                                             <button type="submit" class="btn">Cập nhập</button>
+                                           
                                         </form>
+                                        
                                     </div>
                                 </div>
                                 <div class="col-1">
@@ -53,7 +58,11 @@
                             </div>
                         </div>
                         @endforeach
-
+                        @if ($errors->has('error'))
+                            <div class="alert alert-danger">
+                                {{ $errors->first('error') }}
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -93,4 +102,18 @@
     </div>
 
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Hiển thị thông báo nếu có lỗi
+        @if ($errors->has('error'))
+            $('.alert').slideDown();
+        @endif
+    });
+</script>
+<style>
+        .alert {
+        display: none;
+    }
+</style>
 @endsection

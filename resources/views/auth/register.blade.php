@@ -8,10 +8,10 @@
         <div class="row vh-100">
 
             <div class="container" style=" position: absolute;   max-width: 70%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: auto;">
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                height: auto;">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         <div class="card">

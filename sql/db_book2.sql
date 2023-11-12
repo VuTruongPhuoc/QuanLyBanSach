@@ -830,21 +830,22 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `order_details` (
-  `id` int(10) UNSIGNED NOT NULL,
+	`id` int(20) UNSIGNED NOT NULL,
   `order_id` int(10) UNSIGNED NOT NULL,
   `product_id` int(10) UNSIGNED NOT NULL,
   `price` bigint(20) UNSIGNED NOT NULL,
-  `quality` int(10) UNSIGNED NOT NULL
+  `quantity` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `order_details`
 --
 
-INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `price`, `quality`) VALUES
-(12, 14, 5, 123000, 1),
-(13, 15, 5, 123000, 1),
-(14, 18, 7, 120000, 1);
+INSERT INTO `order_details` (`id`,`order_id`, `product_id`, `price`, `quantity`, `name`, `image`) VALUES
+(1,20, 7, 120000, 2, 'Bao giờ hết ế?', 'img-01.jpg'),
+
 
 -- --------------------------------------------------------
 
@@ -1075,7 +1076,7 @@ CREATE TABLE `table_orders` (
 --
 
 INSERT INTO `table_orders` (`id`, `user_id`, `payment_id`, `shipping_id`, `order_status`, `shipping_address`, `phoneReceiver`, `nameReceiver`, `created_at`, `updated_at`) VALUES
-(18, 8, 1, 4, 2, 'ádssds                                                             s,Huyện Trà Lĩnh,Tỉnh Cao Bằng', '355668062', 'Hongan', '2022-08-22 09:27:00', '2022-08-23 09:33:05');
+(18, 8, 1, 4, 2, 'ádssdss,Huyện Trà Lĩnh,Tỉnh Cao Bằng', '355668062', 'Hongan', '2022-08-22 09:27:00', '2022-08-23 09:33:05');
 
 -- --------------------------------------------------------
 
@@ -1323,11 +1324,6 @@ ALTER TABLE `failed_jobs`
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
---
--- Chỉ mục cho bảng `order_details`
---
-ALTER TABLE `order_details`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Chỉ mục cho bảng `password_resets`
@@ -1367,6 +1363,13 @@ ALTER TABLE `table_banners`
 ALTER TABLE `table_category`
   ADD PRIMARY KEY (`id`);
 
+--
+-- Chỉ mục cho bảng `order_details`
+--
+ALTER TABLE `order_details`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `order_details_order_id_foreign` (`order_id`),
+  ADD KEY `order_details_product_id_foreign` (`product_id`);
 --
 -- Chỉ mục cho bảng `table_discount`
 --
@@ -1569,6 +1572,13 @@ ALTER TABLE `table_orders`
   ADD CONSTRAINT `table_orders_shipping_id_foreign` FOREIGN KEY (`shipping_id`) REFERENCES `table_shipping_fee` (`id`),
   ADD CONSTRAINT `table_orders_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
+
+--
+-- Các ràng buộc cho bảng `order_details`
+--
+ALTER TABLE `order_details`
+  ADD CONSTRAINT `order_details_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `table_orders` (`id`);
+  ADD CONSTRAINT `order_details_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `table_product` (`id`) ON DELETE CASCADE;
 --
 -- Các ràng buộc cho bảng `table_product`
 --
@@ -1603,3 +1613,15 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+
+alter table table_orders
+add subtotal DECIMAL(20, 2);
+create proc Update_Subtotal
+UPDATE table_orders
+SET subtotal = (
+    SELECT SUM(price * quality)
+    FROM order_details AS detail
+    WHERE detail.order_id = table_orders.id
+);

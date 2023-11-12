@@ -29,37 +29,35 @@ class OrderController extends Controller
 
         $arrray  = [];
         foreach (Cart::content() as $row) {
-           
+
             $book = ProductModel::find($row->id);
 
-            if($book->quantity <1){
+            if ($book->quantity < 1) {
                 $arrray[]  = $row->rowId;
             }
         }
-        if(count($arrray)){
-            foreach($arrray as $k){
+        if (count($arrray)) {
+            foreach ($arrray as $k) {
                 Cart::remove($k);
-      
             }
         }
-        if(Cart::count()>0){
+        if (Cart::count() > 0) {
             $province_id = $request->input('province');
             // $states = DistrictModel::all();
             $states = DistrictModel::where('provinceid',  Auth::user()->province_id)->get();
             $countries = ProvinceModel::all();
             $fee_price = ShippingFeeModel::getShippingFee($province_id);
-        
+
             return BasicClass::handlingView('FE.order.list', [
                 'states' => $states,
                 'countries' => $countries,
                 'fee_price' => $fee_price
             ]);
-        }else{
+        } else {
             session()->flash('het', 'Sản phẩm đã hết hoặc đã bị xóa!');
-         
+
             return back();
         }
-       
     }
 
     public function done()
@@ -81,12 +79,12 @@ class OrderController extends Controller
         // insert order
         $order = new OrdersModel;
         $id_user = Auth::user()->id;
-        $users = User::where('id',$id_user)->first();
-        $order ->user_id = Auth::user()->id;
+        $users = User::where('id', $id_user)->first();
+        $order->user_id = Auth::user()->id;
         $fee = $request->input('fee_price');
         $order->order_status = 1;
         $order->payment_id = 1;
-        $order->shipping_address = ($request->order_address).', '.($states->name).', '. ($countries->name);
+        $order->shipping_address = ($request->order_address) . ', ' . ($states->name) . ', ' . ($countries->name);
         $order->phoneReceiver = $request->order_phone;
         $order->nameReceiver = $request->order_name;
         $order->shipping_id = $fee;
@@ -94,53 +92,72 @@ class OrderController extends Controller
 
         foreach (Cart::content() as $row) {
 
-                $book = ProductModel::find($row->id);
-                if($book->quantity>0){
-                    $book->quantity = ($book->quantity)-($row->qty);
-                    $book->save();
-    
-                    $arrBook[]=$book->book_name;
-                    $orderDetail = new OrderDetailsModel;
-                    $orderDetail->order_id = $order->id;
-                    $orderDetail->product_id = $row->id;
-                    $orderDetail->name = $book->name;
-                    $orderDetail->image = $book->image;
-                    $orderDetail->price = $row->price;
-                    $orderDetail->quality = $row->qty;
-        
-                    $orderDetail->save(); 
-                }
-                       
+            $book = ProductModel::find($row->id);
+            if ($book->quantity > 0) {
+                $book->quantity = ($book->quantity) - ($row->qty);
+                $book->save();
+
+                $arrBook[] = $book->book_name;
+                $orderDetail = new OrderDetailsModel;
+                $orderDetail->order_id = $order->id;
+                $orderDetail->product_id = $row->id;
+                $orderDetail->name = $book->name;
+                $orderDetail->image = $book->image;
+                $orderDetail->price = $row->price;
+                $orderDetail->quantity = $row->qty;
+
+                $orderDetail->save();
+            }
         }
-        Cart::destroy(); 
+        Cart::destroy();
         return Redirect::to('thanh-cong');
     }
-
-    function getToken($length){
+    function getToken($length)
+    {
         $token = "";
         $codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        $codeAlphabet.= "abcdefghijklmnopqrstuvwxyz";
-        $codeAlphabet.= "0123456789";
+        $codeAlphabet .= "abcdefghijklmnopqrstuvwxyz";
+        $codeAlphabet .= "0123456789";
         $max = strlen($codeAlphabet); // edited
-    
-       for ($i=0; $i < $length; $i++) {
-           $token .= $codeAlphabet[random_int(0, $max-1)];
-       }
-    
-       return $token;
-   }
 
-     //delete
-     public function cancel(Request $request)
-     {
-         $order = OrdersModel::where('id', $request->id)->first();
-         $order->order_status = 4;
-         $order->save();
-         $order_details= $order->orderDetails;
-         foreach($order_details as $item){
-            $item->product->quantity += $item->quality;
+        for ($i = 0; $i < $length; $i++) {
+            $token .= $codeAlphabet[random_int(0, $max - 1)];
+        }
+        return $token;
+    }
+
+    //delete
+    public function cancel(Request $request)
+    {
+        $order = OrdersModel::where('id', $request->id)->first();
+        $order->order_status = 4;
+        $order->save();
+        $order_details = $order->orderDetails;
+        foreach ($order_details as $item) {
+            $item->product->quantity += $item->quantity;
             $item->product->save();
-         }
-         return back();
-     }
+        }
+        return back();
+    }
+    public function updateOrderSubtotal($orderId)
+    {
+        // Tìm đối tượng Order dựa trên $orderId
+        $order = OrdersModel::find($orderId);
+
+        if ($order) {
+            // Lấy tất cả các chi tiết đơn hàng liên quan
+            $orderDetails = $order->orderDetails;
+
+            // Tính toán và cập nhật table_order.subtotal
+            $subtotal = $orderDetails->sum(function ($detail) {
+                return $detail->price * $detail->quantity;
+            });
+            $order->subtotal = $subtotal;
+            $order->save();
+
+            session()->flash('success', 'Cập nhật subtotal thành công');
+        }
+
+        return back()->with('error', 'Không tìm thấy đơn hàng');
+    }
 }

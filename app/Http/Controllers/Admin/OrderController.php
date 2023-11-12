@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\OrdersModel;
 use App\Models\OrderDetailsModel;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 use Auth;
 class OrderController extends Controller
 {
@@ -65,18 +66,16 @@ class OrderController extends Controller
         $order = OrdersModel::findOrFail($id);
         $order->order_status = $request->input('order_status');
         $order->save();
-
+        $queryResult = DB::select('call update_subtotal()');
         return redirect()->back();
     }
 
      //delete
-     public function delete(Request $request)
-     {
-         OrdersModel::where('id', $request->id)->delete();
-         session()->flash('delete', 'Xóa thành công!');
-         
-         return back();
-     }
-
-     
+    public function delete(Request $request)
+    {
+        OrdersModel::where('id', $request->id)->delete();
+        session()->flash('delete', 'Xóa thành công!');
+        
+        return back();
+    } 
 }

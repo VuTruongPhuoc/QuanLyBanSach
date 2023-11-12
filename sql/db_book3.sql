@@ -830,11 +830,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `order_details` (
-  `id` int(10) UNSIGNED NOT NULL,
+	`id` int(20) UNSIGNED NOT NULL,
   `order_id` int(10) UNSIGNED NOT NULL,
   `product_id` int(10) UNSIGNED DEFAULT NULL,
   `price` bigint(20) UNSIGNED NOT NULL,
-  `quality` int(10) UNSIGNED NOT NULL,
+  `quantity` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -843,17 +843,11 @@ CREATE TABLE `order_details` (
 -- Đang đổ dữ liệu cho bảng `order_details`
 --
 
-INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `price`, `quality`, `name`, `image`) VALUES
-(12, 14, 5, 123000, 1, '', ''),
-(13, 15, 5, 123000, 1, '', ''),
-(14, 18, 7, 120000, 1, '', ''),
-(15, 19, 8, 84000, 2, '', ''),
-(16, 20, 7, 120000, 2, 'Bao giờ hết ế?', 'img-01.jpg'),
-(17, 21, 9, 120000, 1, 'Bao giờ hết ế', 'img-05.jpg'),
-(18, 22, 9, 120000, 1, 'Bao giờ hết ế', 'img-05.jpg'),
-(19, 23, 9, 120000, 1, 'Bao giờ hết ế', 'img-05.jpg'),
-(20, 24, 9, 120000, 1, 'Bao giờ hết ế', 'img-05.jpg'),
-(21, 25, 9, 120000, 1, 'Bao giờ hết ế', 'img-05.jpg');
+INSERT INTO `order_details` (`id`,`order_id`, `product_id`, `price`, `quantity`, `name`, `image`) VALUES
+(1,20, 7, 120000, 2, 'Bao giờ hết ế?', 'img-01.jpg'),
+(2,21, 9, 120000, 1, 'Bao giờ hết ế', 'img-05.jpg'),
+(3,22, 9, 120000, 1, 'Bao giờ hết ế', 'img-05.jpg'),
+
 
 -- --------------------------------------------------------
 

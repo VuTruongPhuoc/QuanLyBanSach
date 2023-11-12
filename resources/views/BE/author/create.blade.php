@@ -8,8 +8,6 @@
             <div class="title_left">
                 <h3>Thêm tác giả</h3>
             </div>
-
-
         </div>
         <div class="clearfix"></div>
         <div class="row">

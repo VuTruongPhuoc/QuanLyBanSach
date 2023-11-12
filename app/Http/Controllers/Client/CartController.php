@@ -25,10 +25,11 @@ class CartController extends Controller
     {
         $id = $request->input('id');
         $quantity = $request->input('quantity');
+       
         $product = ProductModel::find($id);
         $name = $product->name;
         $image = $product->image;
-
+        
         if($product->sale && $product->sale > 0){
             $sale = (100-$product->sale)/100;
             $price = $product->price * $sale;
@@ -61,9 +62,18 @@ class CartController extends Controller
 
     public function update(Request $request, $rowId)
     {
+        $id = $request->input('id');
+        $product = ProductModel::find($id);
+        $quantity_cart = $request->input('update_qty');
+        $product_name = $request->input('name_product');
         
-        Cart::update($rowId, $request->input('update_qty'));
-
+        if ($quantity_cart > $product->quantity) {
+            // Hiển thị thông báo
+            return redirect()->back()->withErrors(['error' => 'Bạn chỉ có thể mua tối đa ' . $product->quantity . ' sản phẩm '.$product_name]);
+        }else{
+            Cart::update($rowId, $request->input('update_qty'));
+        }
+        
         return redirect()->back();
     }
 }
