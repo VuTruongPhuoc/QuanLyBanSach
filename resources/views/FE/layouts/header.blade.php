@@ -43,7 +43,8 @@
                                 {{ Auth::user()->name }}
                             </a>
                             <div class="noidung_dropdown">
-                                <a href="thong-tin-{{Auth::user()->id}}">Thông tin</a>
+                                <a href="thong-tin-{{Auth::user()->id}}">Thông tin cá nhân</a>
+                                <a href="doi-mat-khau-{{Auth::user()->id}}">Đổi mật khẩu</a>
                                 <a href="hoa-don-{{Auth::user()->id}}">Hóa Đơn</a>
                                 <a href="yeu-thich-{{Auth::user()->id}}">Yêu Thích
                                     ({{ Auth::user()->wishlist->count() }})</a>

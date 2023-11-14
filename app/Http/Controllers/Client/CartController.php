@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\ProductModel;
-use Cart;
 use Illuminate\Http\Request;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Session;
 use App\Http\Controllers\Client\BasicClass;
 

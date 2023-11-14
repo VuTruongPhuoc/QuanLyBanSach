@@ -8,8 +8,6 @@
             <!-- <div class="title_left">
                 <h3>Thêm banner</h3>
             </div> -->
-
-
         </div>
         <div class="clearfix"></div>
         <div class="row">
@@ -53,7 +51,7 @@
                                     hàng
                                     <span class="required">*</span></label>
                                 <div class="col-md-6 col-sm-6 ">
-                                    <input type="text" name="name" class="form-control" id="exampleInputEmail1"
+                                    <input type="text" name="name" class="form-control" id="exampleInputName"
                                         placeholder="Nhập tên ..." value="{{ old('code') }}">
                                     <!-- <input type="text" id="first-name" name="name" class="form-control "> -->
                                     <div>
@@ -91,8 +89,8 @@
                                     thoại
                                     <span class="required">*</span></label>
                                 <div class="col-md-6 col-sm-6 ">
-                                    <input type="text" name="phone" class="form-control" id="exampleInputEmail1"
-                                        placeholder="Nhập số điện thoại ..." value="{{ old('email') }}">
+                                    <input type="text" name="phone" class="form-control" id="exampleInputPhone"
+                                        placeholder="Nhập số điện thoại ..." value="{{ old('phone') }}">
                                     <!-- <input type="text" id="first-name" name="name" class="form-control "> -->
                                     <div>
                                         @if ($errors->any())

@@ -35,4 +35,8 @@ class AuthorModel extends Model
     {
         return AuthorModel::orderBy('id', 'DESC')->get();
     }
+    public static function getCount()
+    {
+        return AuthorModel::count(); 
+    }
 }

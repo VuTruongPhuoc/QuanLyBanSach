@@ -56,6 +56,7 @@
                     country_id: $(this).val()
                 },
                 success: function(data) {
+                    $('#state_id').find('option').not(':first').remove();
                     var obj = JSON.parse(data) ;
                     console.log(obj);
                     $.each(obj, function(id, value) {
@@ -68,7 +69,5 @@
         });
 
     });
-
-
 </script>
 </head>

@@ -7,8 +7,9 @@ use App\Models\ReviewsModel;
 use App\Models\User;
 use App\Models\ProductModel;
 use App\Models\OrdersModel;
-use Illuminate\Support\Facades\Redirect;
-use Auth;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Auth\Guard;
+
 
 class ReviewsController extends Controller
 {

@@ -74,6 +74,11 @@ class User extends Authenticatable
     {
         return $this->belongsTo(DistrictModel::class, 'district_id');
     }
+        // Trong mô hình User
+    public function getdistrictbyprovince()
+    {
+        return $this->hasMany(DistrictModel::class, 'provinceid', 'province_id');
+    }
 
     public static function getCount()
     {

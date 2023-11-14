@@ -93,7 +93,9 @@
                                 <i class="fa fa-book"></i>
                                 <span>Khách hàng</span>
                             </a>
+                            
                             <ul class="sub">
+                                <li><a href="{{URL::to('')}}">Thêm khách hàng</a></li>
                                 <li><a href="{{URL::to('admin/users/list')}}">Liệt kê khách hàng</a></li>
                             </ul>
                         </li>

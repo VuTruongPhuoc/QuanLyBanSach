@@ -63,7 +63,7 @@
               </div>
               <div class="profile_info">
                 <span>Xin chào,</span>
-                <h2>Nguyên Dương</h2>
+                <h2>Phước</h2>
               </div>
             </div> -->
                     <!-- /menu profile quick info -->
@@ -127,7 +127,7 @@
                                 <li><a><i class="fa fa-user"></i> Quản lý khách hàng <span
                                             class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <!-- <li><a href="{{ route('admin.user.createView') }}">Tạo khách hàng</a></li> -->
+                                        <li><a href="{{ route('admin.user.createView') }}">Tạo khách hàng</a></li> 
                                         <li><a href="{{ route('admin.user.list') }}">Xem khách hàng</a></li>
                                     </ul>
                                 </li>
@@ -174,7 +174,7 @@
             </div>
 
             <!-- top navigation -->
-            <div class="top_nav">
+            {{-- <div class="top_nav">
                 <div class="nav_menu">
                     <div class="nav toggle">
                         <a id="menu_toggle"><i class="fa fa-bars"></i></a>
@@ -258,7 +258,7 @@
                         </ul>
                     </nav>
                 </div>
-            </div>
+            </div> --}}
             <!-- /top navigation -->
 
             <!-- page content -->

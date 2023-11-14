@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 use Auth;
 use App\Models\DistrictModel;
 use App\Models\ProvinceModel;
+use Illuminate\Support\Facades\Validator;
 
 class UsersController extends Controller
 {
@@ -43,7 +44,7 @@ class UsersController extends Controller
             'phone.numeric' => 'Số điện thoại phải nhập số '
         ];
 
-        $validator = \Validator::make($request->all(), $rules, $messages);
+        $validator = Validator::make($request->all(), $rules, $messages);
 
         $request->flashOnly(['name', 'email', 'phone', 'address']);
         if (!$validator->fails())

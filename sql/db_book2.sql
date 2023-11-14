@@ -1301,11 +1301,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `phone`, `address`, `level`, `block`, `deleted`, `province_id`, `district_id`) VALUES
-(2, 'dev dev', 'admin@gmail.com', NULL, '$2y$10$7VdSC4ZhQ.cqUlk8Z6RsWeyk/qMuYO6wlwEknm4q.Hg8NtHtelzCC', NULL, '2022-07-24 11:47:52', '2022-07-24 11:47:52', 355668062, 'Đồng Nhân', 2, 0, 0, '01TTT', '006HH'),
-(8, 'Hongan', 'thanhne123@gmail.com', NULL, '$2y$10$.9k/HeTWRkoJc7P4G5PbnOKmFSpGLKYv8PkKPiaf81mqJAkOrRKjm', NULL, '2022-07-30 01:24:10', '2022-07-30 01:24:10', 355668062, 'ádssds                             \r\n                                s', 0, 0, 0, '01TTT', '004HH'),
-(9, 'thanh', 'n.hieuthanhps@gmail.com', NULL, '$2y$10$4Glp413j2cEk9MvoUxhFTetcqglFWUcrjOgLQs0jBhpBhAVmCkvTK', NULL, '2022-08-10 21:05:52', '2022-08-10 21:05:52', 355668062, 'nnnnnn', 0, 0, 0, '06TTT', '058HH'),
-(10, 'dev dev', 'admin12321321@gmail.com', NULL, '$2y$10$Uye9xx1RQV2Y4nWC8BEZKOGfF2wwo6ZTtJDy/bC.q1U.uzm60HvaS', NULL, '2022-08-15 10:04:14', '2022-08-15 10:04:14', 355668062, 'Ha Noi', 0, 0, 0, '01TTT', '003HH'),
-(11, '3213213', 'thanh1999@gmail.com', NULL, '$2y$10$Q/..UuR6puOpNz/6dZf0BuIsZslgVVKe1zcgDD5REkBgQgGaBrgNi', NULL, '2022-08-15 10:06:43', '2022-08-15 10:06:43', 111111111, 'Ha Noi', 0, 0, 0, '04TTT', '040HH');
+(2, 'admin11', 'admin@gmail.com', NULL, '$2y$10$7VdSC4ZhQ.cqUlk8Z6RsWeyk/qMuYO6wlwEknm4q.Hg8NtHtelzCC', NULL, '2022-07-24 11:47:52', '2022-07-24 11:47:52', 355668062, 'Đồng Nhân', 2, 0, 0, '01TTT', '006HH'),
+(13, 'adminphuoc, 'admin20002@gmail.com', NULL, 'phuoc123', NULL, '2022-08-26 13:32:47', '2022-08-26 13:32:47', 234234234, 'hai duong', 2, 0, 0, '01TTT', '001HH');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -1620,8 +1617,8 @@ alter table table_orders
 add subtotal DECIMAL(20, 2);
 
 //procedure update_subtotal
-create proc Update_Subtotal()
-as
+DELIMITER //
+CREATE PROCEDURE Update_Subtotal()
 BEGIN
     UPDATE table_orders o
     SET o.subtotal = (
@@ -1629,6 +1626,6 @@ BEGIN
         FROM order_details d
         WHERE d.order_id = o.id
     )
-    where order_status = 3;
-END
-);
+    WHERE o.order_status = 3;
+END //
+DELIMITER ;

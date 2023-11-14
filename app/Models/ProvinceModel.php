@@ -35,4 +35,6 @@ class ProvinceModel extends Model
     {
         return $this->hasOne(ShippingFeeModel::class, 'provinceid', 'provinceid');
     }
+    
+
 }

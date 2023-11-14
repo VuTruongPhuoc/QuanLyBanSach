@@ -34,31 +34,13 @@
                             <div class="col-sm-12">
 
 
-                                @if(session()->has('delete'))
-                                <div class=" text-success custom" style="text-shadow: 0 0 1px black;">
-                                    {{session()->get('delete')}}
-                                </div>
+                                @foreach(['delete', 'save', 'update', 'disable_status', 'enable_status'] as $messageKey)
+                                @if(session()->has($messageKey))
+                                    <div class="text-success custom" style="text-shadow: 0 0 1px black;">
+                                        {{ session($messageKey) }}
+                                    </div>
                                 @endif
-                                @if(session()->has('save'))
-                                <div class=" text-success custom" style="text-shadow: 0 0 1px black;">
-                                    {{session()->get('save')}}
-                                </div>
-                                @endif
-                                @if(session()->has('update'))
-                                <div class=" text-success custom" style="text-shadow: 0 0 1px black;">
-                                    {{session()->get('update')}}
-                                </div>
-                                @endif
-                                @if(session()->has('disable_status'))
-                                <div class=" text-success custom" style="text-shadow: 0 0 1px black;">
-                                    {{session()->get('disable_status')}}
-                                </div>
-                                @endif
-                                @if(session()->has('enable_status'))
-                                <div class=" text-success custom" style="text-shadow: 0 0 1px black;">
-                                    {{session()->get('enable_status')}}
-                                </div>
-                                @endif
+                                @endforeach
 
                                 <div class=" card-box table-responsive">
 

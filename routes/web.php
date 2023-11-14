@@ -73,6 +73,8 @@ Route::get('danh-sach-tac-gia', [App\Http\Controllers\Client\AuthorController::c
 
 #Users
 Route::get('thong-tin-{id}', [UsersClient::class, 'index']);
+Route::get('doi-mat-khau-{id}', [UsersClient::class, 'resetpassword']);
+Route::post('doi-mat-khau-{id}', [UsersClient::class, 'changepassword'])->name('resetPassword');
 Route::get('hoa-don-{id}', [UsersClient::class, 'order']);
 Route::get('yeu-thich-{id}', [UsersClient::class, 'wishlist']);
 
@@ -81,6 +83,10 @@ Route::post('review/store', [App\Http\Controllers\ReviewsController::class, 'sto
 
 Route::get('search', [SearchController::class, 'getSearch']);
 Route::post('search/name', [SearchController::class, 'getSearchAjax'])->name('search');
+
+#UpdateInfo_Account
+Route::get('edit-account-{id}', [App\Http\Controllers\Client\UsersController::class, 'edit_account']);
+Route::post('update-account-{id}', [App\Http\Controllers\Client\UsersController::class, 'update_account'])->name('updateAccount');
 /*
  *
  *

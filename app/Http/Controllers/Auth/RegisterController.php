@@ -56,7 +56,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'phone'     => 'numeric|min:111111111|max:99999999999',
-            'address'   => 'min:6',
+            'address'   => 'required',
             'province_id'     => 'required',
             'district_id'   => 'required',
         ]);
@@ -75,10 +75,7 @@ class RegisterController extends Controller
        
         $users = User::all();
         
-        if(count($users)==0)
-            $level=2;
-        else 
-            $level=0;
+        $level = (count($users) == 0) ? 2 : 0;
         // dump($data);
         // die;
         return User::create([
@@ -91,6 +88,7 @@ class RegisterController extends Controller
             'province_id'   => $data['province_id'],
             'district_id'   => $data['district_id'],
         ]);
+        
     }
     
     /**
